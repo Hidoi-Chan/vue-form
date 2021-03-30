@@ -63,6 +63,7 @@ export default {
         .icon {
             position: relative;
             width: 30px;
+            min-width: 30px;
             height: 30px;
             box-sizing: border-box;
             border: $border;
@@ -131,6 +132,14 @@ export default {
             content: '';
             display: table;
             clear: both;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .accordion-title {
+            h2 {
+                font-size: 1.2rem;
+            }
         }
     }
 

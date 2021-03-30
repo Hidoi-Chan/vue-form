@@ -56,13 +56,11 @@
         </div>
         <div class="form-footer">
             <div class="success" v-if="isValid">Новый клиент успешно создан</div>
-            <div class="send-form-block">
-                <div class="notifications">
-                    <input type="checkbox" id="notifications" v-model="notification.value">
-                    <label class="notifications" for="notifications">{{notification.label}}</label>
-                </div>
-                <Button @click="sendForm">Зарегистрироваться</Button>
+            <div class="notifications" v-else>
+                <input type="checkbox" id="notifications" v-model="notification.value">
+                <label class="notifications" for="notifications">{{notification.label}}</label>
             </div>
+            <Button @click="sendForm">Зарегистрироваться</Button>
         </div>
     </form>
 </template>
@@ -512,10 +510,12 @@ export default {
             }
         },
         sendForm() {
-            this.checkValidSection(this.sectionsKeys[this.sectionsKeys.length - 1])
-
             let result = true
-            this.sectionsKeys.map(key => {
+            this.sectionsKeys.map((key, index) => {
+                if (index === this.sectionsKeys.length - 1 && result === true) {
+                    this.checkValidSection(key)
+                }
+
                 if (!this.sections[key].isValid) {
                     result = false
                 }
@@ -606,20 +606,17 @@ export default {
 
     .form-footer {
         padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
         .success {
             padding: 10px 20px;
-            margin-bottom: 10px;
             color: green;
             border: 1px solid green;
             border-radius: 4px;
+            box-shadow: 0 0 5px green;
             text-align: center;
-        }
-
-        .send-form-block {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
     }
 
@@ -664,7 +661,7 @@ export default {
             position: absolute;
             width: 6px;
             height: 10px;
-            top: 2px;
+            top: 0;
             left: 7px;
             box-sizing: border-box;
             border: solid #fff;
@@ -676,6 +673,44 @@ export default {
 
         input[type="checkbox"] + label::after {
             opacity: 1;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .form {
+            max-width: 90%;
+        }
+
+        .grid,
+        .grid.client {
+            grid-template-columns: none;
+        }
+
+        .type-of-document,
+        .issued-by {
+            grid-column-start: auto;
+            grid-column-end: auto;
+        }
+
+        .form-footer {
+
+            .success {
+                max-width: 30%;
+            }
+        }
+    }
+
+    @media screen and (max-width: 500px) {        
+        .form-footer {
+            flex-direction: column;
+
+            .success {
+                max-width: 100%;
+            }
+
+            button {
+                margin-top: 10px;
+            }
         }
     }
 </style>

@@ -121,6 +121,7 @@ export default {
         position: absolute;
         width: 100%;
         transition: max-height 400ms ease;
+        z-index: 20;
     }
 
     .options-container.open {

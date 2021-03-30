@@ -32,4 +32,10 @@ export default {
         margin: 60px 0;
         font-size: 16px;
     }
+
+    @media screen and (max-width: 600px) {
+        #app {
+            font-size: 14px;
+        }
+    }
 </style>
